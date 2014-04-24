@@ -42,9 +42,11 @@ class EasyS3
     rescue
       raise FileNotFound, file_path
     end
-
-    filename = "#{File.basename(file_path)}"
+    
+    extension = File.extname(file_path)
+    filename = File.basename(file_path, extension)
     filename += "_#{Digest::SHA1.hexdigest(File.basename(file_path))}" if options[:digest]
+    filename += extension
 
     file = @dir.files.create(
         key:    filename,
