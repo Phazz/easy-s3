@@ -51,7 +51,7 @@ describe EasyS3 do
 
     it 'should create file with digest' do
       url = s3.create_file(file_path, digest: true, public: true)
-      url.should == "https://#{bucket_name}.s3-#{region}.amazonaws.com/#{File.basename(file_path)}_#{Digest::SHA1.hexdigest(File.basename(file_path))}"
+      url.should match Digest::SHA1.hexdigest(File.basename(file_path))
     end
 
     it 'should create a public file' do
